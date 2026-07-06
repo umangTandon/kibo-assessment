@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryHold.Contracts", "src\InventoryHold.Contracts\InventoryHold.Contracts.csproj", "{3A1B0B20-4A6D-4D2A-BB1A-FE0A4C711615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryHold.Domain", "src\InventoryHold.Domain\InventoryHold.Domain.csproj", "{B2F123D6-0A1F-4D50-A9A5-A9C2E383B7D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryHold.Infrastructure", "src\InventoryHold.Infrastructure\InventoryHold.Infrastructure.csproj", "{CF7C5E9C-6E0A-4AD8-9D4A-D46081E09E7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryHold.WebApi", "src\InventoryHold.WebApi\InventoryHold.WebApi.csproj", "{F2F6A0A3-EF1E-4E40-92D3-DAF10CED1234}"
+EndProject
+Project("{3AC096D0-A1C2-E12C-1390-A8335801FDAB}") = "InventoryHold.UnitTests", "src\InventoryHold.UnitTests\InventoryHold.UnitTests.csproj", "{E0D64F80-C3FA-4A9E-9A34-38BF8A9DB146}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A1B0B20-4A6D-4D2A-BB1A-FE0A4C711615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A1B0B20-4A6D-4D2A-BB1A-FE0A4C711615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F123D6-0A1F-4D50-A9A5-A9C2E383B7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F123D6-0A1F-4D50-A9A5-A9C2E383B7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7C5E9C-6E0A-4AD8-9D4A-D46081E09E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7C5E9C-6E0A-4AD8-9D4A-D46081E09E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F6A0A3-EF1E-4E40-92D3-DAF10CED1234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F6A0A3-EF1E-4E40-92D3-DAF10CED1234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D64F80-C3FA-4A9E-9A34-38BF8A9DB146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D64F80-C3FA-4A9E-9A34-38BF8A9DB146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+EndGlobal

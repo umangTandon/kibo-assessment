@@ -1,0 +1,78 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:7
+    container_name: inventory-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  redis:
+    image: redis:7-alpine
+    container_name: inventory-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: inventory-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: src/InventoryHold.WebApi/Dockerfile
+    container_name: inventory-api
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      MongoDB__ConnectionString: mongodb://mongodb:27017
+      MongoDB__DatabaseName: inventoryhold
+      REDIS__ConnectionString: redis:6379,abortConnect=false
+      RABBITMQ__Host: rabbitmq
+      RABBITMQ__Port: 5672
+      RABBITMQ__Username: guest
+      RABBITMQ__Password: guest
+      RABBITMQ__VirtualHost: /
+      RABBITMQ__ExchangeName: inventory-hold.events
+    ports:
+      - "5000:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: inventory-frontend
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+volumes:
+  mongo_data:
