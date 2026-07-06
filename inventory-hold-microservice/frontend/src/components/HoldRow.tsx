@@ -9,7 +9,7 @@ interface Props {
 
 export default function HoldRow({ hold, onReleased }: Props) {
   const [now, setNow] = useState(Date.now());
-  const { mutateAsync, isLoading, isError, error } = useReleaseHold();
+  const { mutateAsync, isPending, isError, error } = useReleaseHold();
 
   useEffect(() => {
     const id = window.setInterval(() => setNow(Date.now()), 1000);
@@ -33,7 +33,7 @@ export default function HoldRow({ hold, onReleased }: Props) {
       <td style={{ padding: '0.5rem', borderBottom: '1px solid #eee' }}>{hold.status}</td>
       <td style={{ padding: '0.5rem', borderBottom: '1px solid #eee' }}>{countdown}</td>
       <td style={{ padding: '0.5rem', borderBottom: '1px solid #eee' }}>
-        <button onClick={handleRelease} disabled={isLoading || hold.status !== 'Active'}>
+        <button onClick={handleRelease} disabled={isPending || hold.status !== 'Active'}>
           Release
         </button>
         {isError && <div style={{ color: 'red' }}>{(error as Error).message}</div>}

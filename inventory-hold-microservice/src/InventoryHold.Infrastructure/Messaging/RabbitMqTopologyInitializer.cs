@@ -20,7 +20,7 @@ public sealed class RabbitMqTopologyInitializer : IHostedService
     {
         try
         {
-            await using var channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
+            await using var channel = await _connection.CreateChannelAsync(new CreateChannelOptions(publisherConfirmationsEnabled: false, publisherConfirmationTrackingEnabled: false), cancellationToken);
             await channel.ExchangeDeclareAsync(
                 exchange: ExchangeName,
                 type: ExchangeType.Topic,

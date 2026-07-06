@@ -1,5 +1,6 @@
 using System.Text.Json;
 using InventoryHold.Domain.Ports;
+using InventoryHold.Infrastructure.Messaging.Options;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
@@ -24,11 +25,11 @@ public sealed class RabbitMqPublisher : IMessagePublisher
 
     public async Task PublishAsync<T>(string routingKey, T message, CancellationToken ct = default) where T : class
     {
-        await using var channel = await _connection.CreateChannelAsync(cancellationToken: ct);
+        await using var channel = await _connection.CreateChannelAsync(new CreateChannelOptions(publisherConfirmationsEnabled: false, publisherConfirmationTrackingEnabled: false), ct);
 
         var body = JsonSerializer.SerializeToUtf8Bytes(message, _jsonOptions);
-        var props = channel.CreateBasicProperties();
-        props.DeliveryMode = 2;
+        var props = new BasicProperties();
+        props.DeliveryMode = DeliveryModes.Persistent;
         props.ContentType = "application/json";
         props.MessageId = Guid.NewGuid().ToString();
         props.Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds());

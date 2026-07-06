@@ -1,0 +1,59 @@
+# .gitignore for inventory-hold-microservice
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+.idea/
+.vscode/
+.DS_Store
+
+temp/
+
+# TypeScript build output
+dist/
+.build/
+
+# Vite cache
+node_modules/.vite/
+
+# .NET
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# Docker
+docker-compose.override.yml
+docker-compose.*.local.yml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated frontend artifacts
+frontend/dist/
+
+# Misc
+*.env
+.env.*
+
+# Ignore npm package lock if you do not want to commit it in this repo
+# package-lock.json

@@ -1,5 +1,6 @@
 using InventoryHold.Domain.Ports;
 using InventoryHold.Domain.Repositories;
+using InventoryHold.Infrastructure.BackgroundServices;
 using InventoryHold.Infrastructure.Caching;
 using InventoryHold.Infrastructure.Caching.Options;
 using InventoryHold.Infrastructure.Messaging;

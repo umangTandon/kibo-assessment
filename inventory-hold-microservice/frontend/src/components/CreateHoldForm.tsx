@@ -35,7 +35,7 @@ export default function CreateHoldForm({ onHoldCreated }: Props) {
       <div style={{ marginBottom: '0.75rem' }}>
         <label>
           Product{' '}
-          <select value={productId} onChange={(e) => setProductId(e.target.value)} disabled={isLoading || mutation.isLoading} style={{ minWidth: 240 }}>
+          <select value={productId} onChange={(e) => setProductId(e.target.value)} disabled={isLoading || mutation.isPending} style={{ minWidth: 240 }}>
             <option value="">Select a product</option>
             {inventory?.map((item) => (
               <option key={item.productId} value={item.productId}>
@@ -48,17 +48,17 @@ export default function CreateHoldForm({ onHoldCreated }: Props) {
       <div style={{ marginBottom: '0.75rem' }}>
         <label>
           Quantity{' '}
-          <input type="number" min="1" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} disabled={mutation.isLoading} />
+          <input type="number" min="1" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} disabled={mutation.isPending} />
         </label>
       </div>
       <div style={{ marginBottom: '0.75rem' }}>
         <label>
           Customer ID{' '}
-          <input type="text" value={customerId} onChange={(e) => setCustomerId(e.target.value)} disabled={mutation.isLoading} />
+          <input type="text" value={customerId} onChange={(e) => setCustomerId(e.target.value)} disabled={mutation.isPending} />
         </label>
       </div>
-      <button type="submit" disabled={mutation.isLoading || !productId || quantity <= 0}>
-        {mutation.isLoading ? 'Placing hold…' : 'Place Hold'}
+      <button type="submit" disabled={mutation.isPending || !productId || quantity <= 0}>
+        {mutation.isPending ? 'Placing hold…' : 'Place Hold'}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>

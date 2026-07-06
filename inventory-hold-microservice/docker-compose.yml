@@ -45,12 +45,9 @@ services:
       dockerfile: src/InventoryHold.WebApi/Dockerfile
     container_name: inventory-api
     depends_on:
-      mongodb:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
+      - mongodb
+      - redis
+      - rabbitmq
     environment:
       MongoDB__ConnectionString: mongodb://mongodb:27017
       MongoDB__DatabaseName: inventoryhold
@@ -70,8 +67,7 @@ services:
       dockerfile: Dockerfile
     container_name: inventory-frontend
     depends_on:
-      api:
-        condition: service_healthy
+      - api
     ports:
       - "3000:80"
 volumes:

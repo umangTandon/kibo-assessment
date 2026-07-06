@@ -31,7 +31,11 @@ public sealed class RedisCacheService : ICacheService
             if (!value.HasValue)
                 return null;
 
-            return JsonSerializer.Deserialize<T>(value!, _jsonOptions);
+            var json = value.ToString();
+            if (string.IsNullOrEmpty(json))
+                return null;
+
+            return JsonSerializer.Deserialize<T>(json, _jsonOptions);
         }
         catch (RedisException ex)
         {
@@ -59,7 +63,8 @@ public sealed class RedisCacheService : ICacheService
         {
             var db = _multiplexer.GetDatabase();
             var json = JsonSerializer.Serialize(value, _jsonOptions);
-            await db.StringSetAsync(key, json, expiry);
+            var expiration = expiry.HasValue ? new Expiration(expiry.Value) : default;
+            await db.StringSetAsync(key, json, expiration);
         }
         catch (RedisException ex)
         {

@@ -5,6 +5,7 @@ using InventoryHold.WebApi.ExceptionHandlers;
 using InventoryHold.WebApi.Extensions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Options;
+using WebApiExceptionHandler = InventoryHold.WebApi.ExceptionHandlers.IExceptionHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.Configure<HoldOptions>(builder.Configuration.GetSection("Hold")
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<HoldService>();
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IExceptionHandler, DomainExceptionHandler>();
+builder.Services.AddSingleton<WebApiExceptionHandler, DomainExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,7 +29,7 @@ app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
     {
-        await context.RequestServices.GetRequiredService<IExceptionHandler>().HandleAsync(context);
+        await context.RequestServices.GetRequiredService<WebApiExceptionHandler>().HandleAsync(context);
     });
 });
 
@@ -36,6 +37,7 @@ app.UseCors();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.MapGet("/health", () => Results.Ok(new { status = "Healthy" })).WithName("Health");
 
 await app.SeedInventoryAsync();
 await app.RunAsync();
